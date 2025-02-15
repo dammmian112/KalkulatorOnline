@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Leasingowy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+            <div class="kalkulator-online-div">
+                    <a href="index.html" class="przycisk-nazwa">Kalkulator Online</a>
+            </div>
+            <div class="przyciski-navbar">
+                    <div class="przyciski">
+                            <a href="kalkulatorInflacji.html" class="przycisk">Kalkulator Inflacji</a>
+                            <a href="kalkulatorKredytowy.html" class="przycisk">Kalkulator Kredytowy</a>
+                            <a href="kalkulatorLeasingowy.html" class="przycisk">Kalkulator Leasingowy</a>
+                            <a href="kalkualatorBMI.html" class="przycisk">Kalkulator BMI</a>
+                    </div>
+            </div>
+    </nav>
+    <main class="main">
+            <section class="calculator-section">
+                    <h1>Kalkulator Leasingowy</h1>
+                    <form id="leasing-form">
+                            <label for="leasing-amount">Kwota leasingu (PLN):</label>
+                            <input type="number" id="leasing-amount" name="leasing-amount" required>
+                            
+                            <label for="interest-rate">Roczna stopa procentowa (%):</label>
+                            <input type="number" id="interest-rate" name="interest-rate" step="0.01" required>
+                            
+                            <label for="leasing-term">Okres leasingu (lata):</label>
+                            <input type="number" id="leasing-term" name="leasing-term" required>
+                            
+                            <label for="residual-value">Wartość końcowa (PLN):</label>
+                            <input type="number" id="residual-value" name="residual-value" required>
+                            
+                            <button type="submit" class="przycisk">Oblicz</button>
+                            <button type="reset" class="przycisk">Reset</button>
+                    </form>
+                    <div id="result"></div>
+            </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Kalkulator Online. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+  <script>
+      document.getElementById('leasing-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const leasingAmount = parseFloat(document.getElementById('leasing-amount').value);
+          const annualRate = parseFloat(document.getElementById('interest-rate').value);
+          const leasingTermYears = parseInt(document.getElementById('leasing-term').value);
+          const residualValue = parseFloat(document.getElementById('residual-value').value);
+
+          if (residualValue >= leasingAmount) {
+              document.getElementById('result').innerText = 'Wartość końcowa musi być mniejsza od kwoty leasingu.';
+              return;
+          }
+          
+          if(isNaN(leasingAmount) || isNaN(annualRate) || isNaN(leasingTermYears) || leasingAmount <= 0 || annualRate <= 0 || leasingTermYears <= 0) {
+              document.getElementById('result').innerText = 'Proszę wpisać prawidłowe wartości.';
+              return;
+          }
+          
+          const monthlyRate = annualRate / 100 / 12;
+          const leasingTermMonths = leasingTermYears * 12;
+
+          const netLeasing = leasingAmount - residualValue;
+          const monthlyPayment = (netLeasing * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -leasingTermMonths));
+
+          const totalPayment = monthlyPayment * leasingTermMonths + residualValue;
+          const totalCost = totalPayment - leasingAmount;
+
+          document.getElementById('result').innerHTML = `
+              <p>Miesięczna rata wynosi: <strong>${monthlyPayment.toFixed(2)} PLN</strong></p>
+              <p>Łączna kwota do spłaty (w tym wartość końcowa): <strong>${totalPayment.toFixed(2)} PLN</strong></p>
+              <p>Całkowity koszt leasingu: <strong>${totalCost.toFixed(2)} PLN</strong></p>
+          `;
+      });
+  </script>
+</body>
+</html>

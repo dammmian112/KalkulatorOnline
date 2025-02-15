@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator BMI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="kalkulator-online-div">
+            <a href="index.html" class="przycisk-nazwa">Kalkulator Online</a>
+        </div>
+        <div class="przyciski-navbar">
+            <div class="przyciski">
+                <a href="kalkulatorInflacji.html" class="przycisk">Kalkulator Inflacji</a>
+                <a href="kalkulatorKredytowy.html" class="przycisk">Kalkulator Kredytowy</a>
+                <a href="kalkulatorLeasingowy.html" class="przycisk">Kalkulator Leasingowy</a>
+                <a href="kalkualatorBMI.html" class="przycisk">Kalkulator BMI</a>
+            </div>
+        </div>
+    </nav>
+    <main class="main">
+        <section class="calculator-section">
+            <h1>Kalkulator BMI</h1>
+            <form id="bmi-form">
+                <label for="weight">Waga (kg):</label>
+                <input type="number" id="weight" name="weight" required>
+                
+                <label for="height">Wzrost (cm):</label>
+                <input type="number" id="height" name="height" required>
+                
+                <button type="submit" class="przycisk">Oblicz</button>
+                <button type="reset" class="przycisk">Reset</button>
+            </form>
+            <div id="result"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Kalkulator Online. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+    <script>
+        document.getElementById('bmi-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            
+            if(isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+                document.getElementById('result').innerText = 'Proszę wpisać prawidłowe wartości.';
+                return;
+            }
+            
+            const bmi = weight / (height * height);
+            let classification = "";
+            
+            if(bmi < 18.5) {
+                classification = "Niedowaga";
+            } else if(bmi >= 18.5 && bmi < 24.9) {
+                classification = "Waga prawidłowa";
+            } else if(bmi >= 24.9 && bmi < 29.9) {
+                classification = "Nadwaga";
+            } else {
+                classification = "Otyłość";
+            }
+            
+            document.getElementById('result').innerHTML = `Twoje BMI wynosi: <strong>${bmi.toFixed(2)}</strong> (<em>${classification}</em>)`;
+        });
+    </script>
+</body>
+</html>

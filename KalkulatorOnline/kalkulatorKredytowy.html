@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kredytowy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="kalkulator-online-div">
+            <a href="index.html" class="przycisk-nazwa">Kalkulator Online</a>
+        </div>
+        <div class="przyciski-navbar">
+            <div class="przyciski">
+                <a href="kalkulatorInflacji.html" class="przycisk">Kalkulator Inflacji</a>
+                <a href="kalkulatorKredytowy.html" class="przycisk">Kalkulator Kredytowy</a>
+                <a href="kalkulatorLeasingowy.html" class="przycisk">Kalkulator Leasingowy</a>
+                <a href="kalkualatorBMI.html" class="przycisk">Kalkulator BMI</a>
+            </div>
+        </div>
+    </nav>
+    <main class="main">
+        <section class="calculator-section">
+            <h1>Kalkulator Kredytowy</h1>
+            <form id="loan-form">
+                <label for="loan-amount">Kwota kredytu (PLN):</label>
+                <input type="number" id="loan-amount" name="loan-amount" required>
+                
+                <label for="interest-rate">Roczna stopa procentowa (%):</label>
+                <input type="number" id="interest-rate" name="interest-rate" step="0.01" required>
+                
+                <label for="loan-term">Okres kredytowania (lata):</label>
+                <input type="number" id="loan-term" name="loan-term" required>
+                
+                <button type="submit" class="przycisk">Oblicz</button>
+                <button type="reset" class="przycisk">Reset</button>
+            </form>
+            <div id="result"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Kalkulator Online. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+    <script>
+        document.getElementById('loan-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const annualRate = parseFloat(document.getElementById('interest-rate').value);
+            const loanTermYears = parseInt(document.getElementById('loan-term').value);
+            
+            if(isNaN(loanAmount) || isNaN(annualRate) || isNaN(loanTermYears) || loanAmount <= 0 || annualRate <= 0 || loanTermYears <= 0) {
+                document.getElementById('result').innerText = 'Proszę wpisać prawidłowe wartości.';
+                return;
+            }
+            
+            const monthlyRate = annualRate / 100 / 12;
+            const loanTermMonths = loanTermYears * 12;
+
+            const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTermMonths));
+            const totalPayment = monthlyPayment * loanTermMonths;
+            const totalInterest = totalPayment - loanAmount;
+            
+            document.getElementById('result').innerHTML = `
+                <p>Miesięczna rata wynosi: <strong>${monthlyPayment.toFixed(2)} PLN</strong></p>
+                <p>Łączna kwota do spłaty: <strong>${totalPayment.toFixed(2)} PLN</strong></p>
+                <p>Całkowity koszt kredytu (odsetki): <strong>${totalInterest.toFixed(2)} PLN</strong></p>
+            `;
+        });
+    </script>
+</body>
+</html>

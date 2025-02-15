@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="kalkulator-online-div">
+            <a href="index.html" class="przycisk-nazwa">Kalkulator Online</a>
+        </div>
+        <div class="przyciski-navbar">
+            <div class="przyciski">
+                <a href="kalkulatorInflacji.html" class="przycisk">Kalkulator Inflacji</a>
+                <a href="kalkulatorKredytowy.html" class="przycisk">Kalkulator Kredytowy</a>
+                <a href="kalkulatorLeasingowy.html" class="przycisk">Kalkulator Leasingowy</a>
+                <a href="kalkualatorBMI.html" class="przycisk">Kalkulator BMI</a>
+            </div>
+        </div>
+    </nav>
+    <main class="main">
+        <section class="welcome">
+          <h1>Witamy na Kalkulator Online!</h1>
+          <p>Wybierz interesujący Cię kalkulator, aby rozpocząć obliczenia.</p>
+        </section>
+
+        <section class="calculators">
+          <article class="calculator">
+            <h2>Kalkulator Inflacji</h2>
+            <p>Oblicz zmiany cen w czasie i dowiedz się, jak inflacja wpływa na Twoje finanse.</p>
+            <a href="kalkulatorInflacji.html">Przejdź do kalkulatora</a>
+          </article>
+      
+          <article class="calculator">
+            <h2>Kalkulator Kredytowy</h2>
+            <p>Sprawdź, jakie będą Twoje raty kredytowe i zaplanuj budżet.</p>
+            <a href="kalkulatorKredytowy.html">Przejdź do kalkulatora</a>
+          </article>
+      
+          <article class="calculator">
+            <h2>Kalkulator Leasingowy</h2>
+            <p>Dowiedz się, jakie są koszty leasingu i wybierz najlepszą ofertę dla siebie.</p>
+            <a href="kalkulatorLeasingowy.html">Przejdź do kalkulatora</a>
+          </article>
+        </section>
+
+        <section class="news">
+          <h2>Aktualności</h2>
+          <article class="news-item">
+            <h3>Nowa wersja kalkulatora kredytowego</h3>
+            <p>Zapoznaj się z najnowszymi funkcjami w naszym kalkulatorze kredytowym, które pomogą Ci lepiej zarządzać swoimi finansami.</p>
+            <a href="news1.html" class="btn">Czytaj więcej</a>
+          </article>
+          <article class="news-item">
+            <h3>Poradnik: Jak oszczędzać na codziennych wydatkach</h3>
+            <p>Dowiedz się, jak małe zmiany w codziennych nawykach mogą przynieść duże oszczędności.</p>
+            <a href="news2.html" class="btn">Czytaj więcej</a>
+          </article>
+        </section>
+
+        <section id="contact" class="contact">
+          <h2>Kontakt</h2>
+          <p>Masz pytania lub sugestie? Skontaktuj się z nami!</p>
+          <form action="sendMessage.php" method="post" class="contact-form">
+            <label for="name">Imię:</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="message">Wiadomość:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+    
+            <button type="submit" class="btn">Wyślij wiadomość</button>
+          </form>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <p>&copy; 2025 Kalkulator Online. Wszelkie prawa zastrzeżone.</p>
+        </div>
+      </footer>    
+</body>
+</html>

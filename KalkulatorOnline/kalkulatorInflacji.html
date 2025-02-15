@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Inflacji</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="kalkulator-online-div">
+      <a href="index.html" class="przycisk-nazwa">Kalkulator Online</a>
+    </div>
+    <div class="przyciski-navbar">
+      <div class="przyciski">
+        <a href="kalkulatorInflacji.html" class="przycisk">Kalkulator Inflacji</a>
+        <a href="kalkulatorKredytowy.html" class="przycisk">Kalkulator Kredytowy</a>
+        <a href="kalkulatorLeasingowy.html" class="przycisk">Kalkulator Leasingowy</a>
+        <a href="kalkualatorBMI.html" class="przycisk">Kalkulator BMI</a>
+      </div>
+    </div>
+  </nav>
+  <main class="main">
+    <section class="calculator-section">
+      <h1>Kalkulator Inflacji</h1>
+      <form id="inflation-form">
+        <label for="initial-amount">Kwota początkowa (PLN):</label>
+        <input type="number" id="initial-amount" name="initial-amount" required>
+        
+        <label for="inflation-rate">Roczna stopa inflacji (%):</label>
+        <input type="number" id="inflation-rate" name="inflation-rate" step="0.01" required>
+        
+        <label for="years">Liczba lat:</label>
+        <input type="number" id="years" name="years" required>
+        
+        <button type="submit" class="przycisk">Oblicz</button>
+        <button type="reset" class="przycisk">Reset</button>
+      </form>
+      <div id="result"></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <p>&copy; 2025 Kalkulator Online. Wszelkie prawa zastrzeżone.</p>
+  </footer>
+  <script>
+    document.getElementById('inflation-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const initialAmount = parseFloat(document.getElementById('initial-amount').value);
+      const inflationRate = parseFloat(document.getElementById('inflation-rate').value) / 100;
+      const years = parseInt(document.getElementById('years').value);
+
+      if(isNaN(initialAmount) || isNaN(inflationRate) || isNaN(years) || initialAmount <= 0 || years <= 0) {
+        document.getElementById('result').innerText = 'Proszę wpisać prawidłowe wartości.';
+        return;
+      }
+      
+      const finalAmount = initialAmount * Math.pow((1 + inflationRate), years);
+      
+      let resultHTML = `<p>Kwota po ${years} latach wynosi: <strong>${finalAmount.toFixed(2)} PLN</strong></p>`;
+
+      resultHTML += `<h2>Przebieg wzrostu wartości:</h2>`;
+      resultHTML += `<table border="1" cellspacing="0" cellpadding="5">
+                      <tr>
+                        <th>Rok</th>
+                        <th>Kwota (PLN)</th>
+                      </tr>`;
+      
+      let currentAmount = initialAmount;
+      for(let i = 1; i <= years; i++) {
+        currentAmount *= (1 + inflationRate);
+        resultHTML += `<tr>
+                         <td>${i}</td>
+                         <td>${currentAmount.toFixed(2)}</td>
+                       </tr>`;
+      }
+      resultHTML += `</table>`;
+      
+      document.getElementById('result').innerHTML = resultHTML;
+    });
+  </script>
+</body>
+</html>
